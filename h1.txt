@@ -1,0 +1,55 @@
+package com.ds;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+public class h1 {
+	public static int[] network(int[][] towers,int radius)
+	{
+		int max=0;
+		int[] arr=new int[2];
+		for (int x = 0; x < towers.length; x++) {
+			for (int y = 0; y <towers.length; y++) {
+				int quality = 0;
+				for(int[] tower:towers)
+				{
+					int d=(int)Math.sqrt(Math.pow(tower[0]-x,2)+Math.pow(tower[1]-y,2)+Math.pow(tower[0]-x,2));
+					if(d<=radius)
+					{
+						quality =quality+tower[2]/(1+d);
+					}
+				}
+				if(quality>max)
+				{
+					max=quality;
+					arr[0]=x;
+					arr[1]=y;
+				}
+				else if(quality==max&& (x<arr[0]||(x==arr[0]&&y<arr[1])))
+				{
+					arr[0]=x;
+					arr[1]=y;
+			}
+		}
+	}
+		return arr;
+}
+	public static void main(String[] args) {
+		Scanner scanner=new Scanner(System.in);
+		System.out.println("enter the size of the array");
+		int size=scanner.nextInt();
+		int[][] tower=new int[size][size];
+		System.out.println("enter the values");
+		for(int i=0;i<tower.length;i++)
+		{
+			for(int j=0;j<tower.length;j++)
+			{
+			tower[i][j]=scanner.nextInt();
+			}
+		}
+		System.out.println("enter the radius");
+		int radius=scanner.nextInt();
+		int[] arr=network(tower,radius);
+		System.out.println(Arrays.toString(arr));
+	}
+}
